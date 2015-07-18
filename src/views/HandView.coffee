@@ -22,7 +22,7 @@ class window.HandView extends Backbone.View
     score = scores[0] + ''
     if scores[1] <= 21 and scores[1] != scores[0] then score += ' or ' + scores[1]
 
-    if @collection.length == 2 and scores[0] == 21 then score = 'Blackjack!'
+    if @collection.length == 2 and scores[1] == 21 then score = 'Blackjack!'
 
     @$('.score').text score
 

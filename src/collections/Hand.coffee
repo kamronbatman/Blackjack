@@ -10,8 +10,8 @@ class window.Hand extends Backbone.Collection
   stand: ->
     @trigger 'stand', @
 
-  hasAce: -> @reduce (memo, card) ->
-    memo or card.get('value') is 1
+  hasAce: (hidden) -> @reduce (memo, card) ->
+    memo or ((hidden or card.get('revealed')) and card.get('value') is 1)
   , 0
 
   minScore: (hidden) -> @reduce (score, card) ->
@@ -19,7 +19,7 @@ class window.Hand extends Backbone.Collection
   , 0
 
   hasBlackjack: ->
-    (@minScore(true) + (10 * @hasAce())) == 21 and @length == 2
+    (@minScore(true) + (10 * @hasAce(true))) == 21 and @length == 2
 
   revealCard: ->
     (@at 0).flip()
