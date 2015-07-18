@@ -5,6 +5,7 @@ class window.BlackjackView extends Backbone.View
     <button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="deal-button">Deal</button>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
+    <div class="results"><h2><span id="results"> </span></h2></div>
   '
 
   events:
@@ -14,8 +15,17 @@ class window.BlackjackView extends Backbone.View
 
   initialize: ->
     @render()
-    @model.on 'deal', () -> 
+
+    @model.on 'endGame', (score) ->
+      @$('.hit-button').prop('disabled', true)
+      @$('.stand-button').prop('disabled', true)
+      @$('#results').text score
+    , @
+
+    @model.on 'deal', () ->
       @render()
+      @$('.hit-button').prop('disabled', false)
+      @$('.stand-button').prop('disabled', false)
     , @
     return
 
